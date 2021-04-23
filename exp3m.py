@@ -98,8 +98,8 @@ class exp3_m(object):
         return self.choices
 
     def create_rewards(self, reward_data):
-        rewards = [self.reward_function(i, reward_data[i])
-                   for i in range(len(self.probabilities))]
+        rewards = [self.reward_function(choice, reward_data[i])
+                   for i, choice in enumerate(self.choices)]
 
         regret = np.sum([self.reward_max - r for r in rewards])
 

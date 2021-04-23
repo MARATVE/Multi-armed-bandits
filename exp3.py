@@ -12,7 +12,7 @@ import logging
 class exp3_efficient_bandit(object):
     def __init__(self, choices, reward_min=0, reward_max=1, gamma=0.07, reward_function=None, model_path=None):
         if model_path is None:
-            self.weights = np.full(1/len(choices))
+            self.weights = np.full(len(choices), 1/len(choices))
         else:
             self.weights = np.load(model_path)
 
@@ -34,6 +34,7 @@ class exp3_efficient_bandit(object):
     def give_reward(self, reward_data):
         reward = self.reward_function(self.choice, reward_data)
 
+        
         scaled_reward = (reward - self.reward_min) / \
             (self.reward_max - self.reward_min)
 
