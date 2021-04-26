@@ -47,7 +47,7 @@ def max_point_exp3(rounds, numbers):
     bandit = exp3.exp3_efficient_bandit(
         numbers, reward_function=r.max_point)
     for i in range(rounds):
-        bandit.draw(int(rounds/10))
+        bandit.draw()
         regrets.append(bandit.give_reward(numbers))
 
     write_regret(
@@ -58,12 +58,8 @@ def max_point_exp3m(rounds, numbers):
     regrets = []
     bandit = exp3m.exp3_m(numbers, reward_function=r.max_point)
     for i in range(rounds):
-        bandit.draw(100)
+        bandit.draw(int(rounds/10))
         regrets.append(bandit.give_reward(numbers))
-        if i % int(rounds/10) == 0:
-            plt.plot(np.cumsum(regrets))
-            plt.title("exp3m_maxpoint, k = 100")
-            plt.savefig(f"plots/exp3m_maxpoint")
     write_regret(
         regrets, f"exp3m maxpoint rounds = {rounds}", f"exp3_max/{rounds}-{len(numbers)}")
 
@@ -79,7 +75,7 @@ for i, rounds in enumerate(rounds_exp3):
     p2 = Process(target=max_point_exp3, args=(rounds, numbers,))
     p2.start()
 
-for i, rounds in enumerate(rounds_exp3):
+for i, rounds in enumerate(rounds_exp3m):
     numbers = np.random.choice(range(rounds * 10), rounds)
     p1 = Process(target=binary_exp3m, args=(rounds, numbers,))
     p1.start()
