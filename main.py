@@ -35,7 +35,7 @@ def binary_exp3m(rounds, numbers):
     regrets = []
     bandit = exp3m.exp3_m(numbers, reward_function=r.binary_reward)
     for i in range(rounds):
-        bandit.draw(100)
+        bandit.draw(int(rounds/10))
         regrets.append(bandit.give_reward(numbers))
 
     write_regret(
@@ -47,7 +47,7 @@ def max_point_exp3(rounds, numbers):
     bandit = exp3.exp3_efficient_bandit(
         numbers, reward_function=r.max_point)
     for i in range(rounds):
-        bandit.draw()
+        bandit.draw(int(rounds/10))
         regrets.append(bandit.give_reward(numbers))
 
     write_regret(
